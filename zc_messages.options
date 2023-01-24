@@ -1,0 +1,38 @@
+ZCVersion.uuid			max_size:16
+ZCVersion.sw_ver		max_size:3
+ZCVersion.hw_ver		max_size:4
+ZCVersion.link_addr		max_size:8
+
+ZCTemperature.value		int_size:IS_16
+
+ZCStatus.temp			max_count:4
+
+ZCCurvePoint.limit		int_size:IS_16
+
+ZCCurveConfig.points		max_count:16
+
+ZCCsomModConfig.closed		int_size:IS_16
+ZCCsomModConfig.period		int_size:IS_16
+
+ZCOcpConfig.limit		int_size:IS_16
+ZCOcpConfig.filter		int_size:IS_16
+ZCOcpConfig.rec_delay		int_size:IS_16
+ZCOcpConfig.rec_attempts	int_size:IS_16
+
+ZCOuvpConfig.lower		int_size:IS_16
+ZCOuvpConfig.upper		int_size:IS_16
+
+ZCCoapConfig.obs_interval	int_size:IS_16
+
+ZCCalibConfig.arg		max_size:8
+
+ZCError.code			int_size:IS_16
+
+ZCApiVersion			long_names:false
+ZCSwitchState			long_names:false
+ZCDeviceState			long_names:false
+ZCTripCause			long_names:false
+ZCFlowDirection			long_names:false
+ZCDeviceCmd			long_names:false
+ZCTempLoc			long_names:false
+ZCCalibType			long_names:false

@@ -1,0 +1,7 @@
+config NANOPB_INTERNAL
+    bool "Use internal nanopb implementation"
+    default y
+
+config ZERO_COAP_PAYLOAD
+    bool "Use nanopb-based message structures for CoAP payload"
+    default y

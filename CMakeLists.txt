@@ -1,0 +1,10 @@
+if(CONFIG_NANOPB_INTERNAL)
+    add_subdirectory(nanopb)
+endif()
+
+if (CONFIG_ZERO_COAP_PAYLOAD)
+    zephyr_library()
+    zephyr_library_include_directories(.)
+    zephyr_include_directories(.)
+    zephyr_library_sources(zc_messages.pb.c)
+endif()
