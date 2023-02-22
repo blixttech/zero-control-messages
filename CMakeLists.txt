@@ -1,8 +1,8 @@
-if(CONFIG_NANOPB_INTERNAL)
+if(CONFIG_ZERO_NANOPB_INTERNAL)
     add_subdirectory(nanopb)
 endif()
 
-if (CONFIG_ZERO_COAP_PAYLOAD)
+if (CONFIG_ZERO_CONTROL_MESSAGES)
     zephyr_library()
     zephyr_library_include_directories(.)
     zephyr_include_directories(.)
