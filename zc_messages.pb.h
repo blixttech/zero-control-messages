@@ -168,10 +168,10 @@ typedef struct zc_oufp_config {
     uint32_t upper; /* Upper limit in millihertz. */
 } zc_oufp_config_t;
 
-/* CoAP configuration. */
-typedef struct zc_coap_config {
-    uint16_t obs_interval; /* Observer notification interval in milliseconds. */
-} zc_coap_config_t;
+/* Notification configuration. */
+typedef struct zc_notif_config {
+    uint16_t interval; /* Notification interval in milliseconds. */
+} zc_notif_config_t;
 
 typedef PB_BYTES_ARRAY_T(8) zc_calib_config_arg_t;
 /* Calibration configuration. */
@@ -189,80 +189,80 @@ typedef struct zc_config {
         zc_ocp_config_t ocp; /* Over current protection. */
         zc_ouvp_config_t ouv; /* Over/under voltage protection. */
         zc_oufp_config_t ouf; /* Over/under frequency protection. */
-        zc_coap_config_t coap; /* CoAP. */
+        zc_notif_config_t notif; /* Notification. */
         zc_calib_config_t calib; /* Calibration. */
     } config;
 } zc_config_t;
 
 /* Version request. */
-typedef struct zc_version_request {
+typedef struct zc_request_version {
     uint32_t null;
-} zc_version_request_t;
+} zc_request_version_t;
 
 /* Status request. */
-typedef struct zc_status_request {
+typedef struct zc_request_status {
     uint32_t null;
-} zc_status_request_t;
+} zc_request_status_t;
 
 /* Device command request. */
-typedef struct zc_device_cmd_request {
+typedef struct zc_request_device_cmd {
     zc_device_cmd_t cmd;
-} zc_device_cmd_request_t;
+} zc_request_device_cmd_t;
 
 /* Set configuration request */
-typedef struct zc_set_config_request {
+typedef struct zc_request_set_config {
     bool has_config;
     zc_config_t config;
-} zc_set_config_request_t;
+} zc_request_set_config_t;
 
 /* Get curve configuration request. */
-typedef struct zc_get_curve_config_request {
+typedef struct zc_request_get_config_curve {
     zc_flow_direction_t direction;
-} zc_get_curve_config_request_t;
+} zc_request_get_config_curve_t;
 
 /* Get closed-state operation mode configuration request. */
-typedef struct zc_get_csom_config_request {
+typedef struct zc_request_get_config_csom {
     uint32_t null;
-} zc_get_csom_config_request_t;
+} zc_request_get_config_csom_t;
 
 /* Get over current protection configuration request. */
-typedef struct zc_get_ocp_config_request {
+typedef struct zc_request_get_config_ocp {
     uint32_t null;
-} zc_get_ocp_config_request_t;
+} zc_request_get_config_ocp_t;
 
 /* Get over/under voltage protection configuration request. */
-typedef struct zc_get_ouvp_config_request {
+typedef struct zc_request_get_config_ouvp {
     uint32_t null;
-} zc_get_ouvp_config_request_t;
+} zc_request_get_config_ouvp_t;
 
 /* Get over/under frequency protection configuration request. */
-typedef struct zc_get_oufp_config_request {
+typedef struct zc_request_get_config_oufp {
     uint32_t null;
-} zc_get_oufp_config_request_t;
+} zc_request_get_config_oufp_t;
 
-/* Get CoAP configuration request. */
-typedef struct zc_get_coap_config_request {
+/* Get notification configuration request. */
+typedef struct zc_request_get_config_notif {
     uint32_t null;
-} zc_get_coap_config_request_t;
+} zc_request_get_config_notif_t;
 
 /* Get calibration configuration request. */
-typedef struct zc_get_calib_config_request {
+typedef struct zc_request_get_config_calib {
     zc_calib_type_t type;
-} zc_get_calib_config_request_t;
+} zc_request_get_config_calib_t;
 
 /* Get configuration. */
-typedef struct zc_get_config_request {
+typedef struct zc_request_get_config {
     pb_size_t which_config;
     union {
-        zc_get_curve_config_request_t curve; /* Trip curve */
-        zc_get_csom_config_request_t csom; /* Closed-state operation mode. */
-        zc_get_ocp_config_request_t ocp; /* Over current protection. */
-        zc_get_ouvp_config_request_t ouv; /* Over/under voltage protection. */
-        zc_get_oufp_config_request_t ouf; /* Over/under frequency protection. */
-        zc_get_coap_config_request_t coap; /* CoAP. */
-        zc_get_calib_config_request_t calib; /* Calibration. */
+        zc_request_get_config_curve_t curve; /* Trip curve */
+        zc_request_get_config_csom_t csom; /* Closed-state operation mode. */
+        zc_request_get_config_ocp_t ocp; /* Over current protection. */
+        zc_request_get_config_ouvp_t ouv; /* Over/under voltage protection. */
+        zc_request_get_config_oufp_t ouf; /* Over/under frequency protection. */
+        zc_request_get_config_notif_t notif; /* Notification. */
+        zc_request_get_config_calib_t calib; /* Calibration. */
     } config;
-} zc_get_config_request_t;
+} zc_request_get_config_t;
 
 /* Error/status information. */
 typedef struct zc_error {
@@ -284,11 +284,11 @@ typedef struct zc_response {
 typedef struct zc_request {
     pb_size_t which_msg;
     union {
-        zc_version_request_t version;
-        zc_status_request_t status;
-        zc_device_cmd_request_t cmd;
-        zc_set_config_request_t set_config;
-        zc_get_config_request_t get_config;
+        zc_request_version_t version;
+        zc_request_status_t status;
+        zc_request_device_cmd_t cmd;
+        zc_request_set_config_t set_config;
+        zc_request_get_config_t get_config;
     } msg;
 } zc_request_t;
 
@@ -399,17 +399,17 @@ extern "C" {
 
 
 
-#define zc_device_cmd_request_t_cmd_ENUMTYPE zc_device_cmd_t
+#define zc_request_device_cmd_t_cmd_ENUMTYPE zc_device_cmd_t
 
 
-#define zc_get_curve_config_request_t_direction_ENUMTYPE zc_flow_direction_t
-
-
-
+#define zc_request_get_config_curve_t_direction_ENUMTYPE zc_flow_direction_t
 
 
 
-#define zc_get_calib_config_request_t_type_ENUMTYPE zc_calib_type_t
+
+
+
+#define zc_request_get_config_calib_t_type_ENUMTYPE zc_calib_type_t
 
 
 
@@ -428,24 +428,24 @@ extern "C" {
 #define ZC_OCP_CONFIG_INIT_DEFAULT               {0, 0, 0, 0, 0}
 #define ZC_OUVP_CONFIG_INIT_DEFAULT              {0, 0}
 #define ZC_OUFP_CONFIG_INIT_DEFAULT              {0, 0}
-#define ZC_COAP_CONFIG_INIT_DEFAULT              {0}
+#define ZC_NOTIF_CONFIG_INIT_DEFAULT             {0}
 #define ZC_CALIB_CONFIG_INIT_DEFAULT             {_ZC_CALIB_TYPE_MIN, {0, {0}}}
 #define ZC_CONFIG_INIT_DEFAULT                   {0, {ZC_CURVE_CONFIG_INIT_DEFAULT}}
-#define ZC_VERSION_REQUEST_INIT_DEFAULT          {0}
-#define ZC_STATUS_REQUEST_INIT_DEFAULT           {0}
-#define ZC_DEVICE_CMD_REQUEST_INIT_DEFAULT       {_ZC_DEVICE_CMD_MIN}
-#define ZC_SET_CONFIG_REQUEST_INIT_DEFAULT       {false, ZC_CONFIG_INIT_DEFAULT}
-#define ZC_GET_CURVE_CONFIG_REQUEST_INIT_DEFAULT {_ZC_FLOW_DIRECTION_MIN}
-#define ZC_GET_CSOM_CONFIG_REQUEST_INIT_DEFAULT  {0}
-#define ZC_GET_OCP_CONFIG_REQUEST_INIT_DEFAULT   {0}
-#define ZC_GET_OUVP_CONFIG_REQUEST_INIT_DEFAULT  {0}
-#define ZC_GET_OUFP_CONFIG_REQUEST_INIT_DEFAULT  {0}
-#define ZC_GET_COAP_CONFIG_REQUEST_INIT_DEFAULT  {0}
-#define ZC_GET_CALIB_CONFIG_REQUEST_INIT_DEFAULT {_ZC_CALIB_TYPE_MIN}
-#define ZC_GET_CONFIG_REQUEST_INIT_DEFAULT       {0, {ZC_GET_CURVE_CONFIG_REQUEST_INIT_DEFAULT}}
+#define ZC_REQUEST_VERSION_INIT_DEFAULT          {0}
+#define ZC_REQUEST_STATUS_INIT_DEFAULT           {0}
+#define ZC_REQUEST_DEVICE_CMD_INIT_DEFAULT       {_ZC_DEVICE_CMD_MIN}
+#define ZC_REQUEST_SET_CONFIG_INIT_DEFAULT       {false, ZC_CONFIG_INIT_DEFAULT}
+#define ZC_REQUEST_GET_CONFIG_CURVE_INIT_DEFAULT {_ZC_FLOW_DIRECTION_MIN}
+#define ZC_REQUEST_GET_CONFIG_CSOM_INIT_DEFAULT  {0}
+#define ZC_REQUEST_GET_CONFIG_OCP_INIT_DEFAULT   {0}
+#define ZC_REQUEST_GET_CONFIG_OUVP_INIT_DEFAULT  {0}
+#define ZC_REQUEST_GET_CONFIG_OUFP_INIT_DEFAULT  {0}
+#define ZC_REQUEST_GET_CONFIG_NOTIF_INIT_DEFAULT {0}
+#define ZC_REQUEST_GET_CONFIG_CALIB_INIT_DEFAULT {_ZC_CALIB_TYPE_MIN}
+#define ZC_REQUEST_GET_CONFIG_INIT_DEFAULT       {0, {ZC_REQUEST_GET_CONFIG_CURVE_INIT_DEFAULT}}
 #define ZC_ERROR_INIT_DEFAULT                    {0}
 #define ZC_RESPONSE_INIT_DEFAULT                 {0, {ZC_VERSION_INIT_DEFAULT}}
-#define ZC_REQUEST_INIT_DEFAULT                  {0, {ZC_VERSION_REQUEST_INIT_DEFAULT}}
+#define ZC_REQUEST_INIT_DEFAULT                  {0, {ZC_REQUEST_VERSION_INIT_DEFAULT}}
 #define ZC_MESSAGE_INIT_DEFAULT                  {0, {ZC_REQUEST_INIT_DEFAULT}}
 #define ZC_VERSION_INIT_ZERO                     {_ZC_API_VERSION_MIN, false, {0, {0}}, false, {0, {0}}, false, {0, {0}}, false, {0, {0}}, false, 0}
 #define ZC_TEMPERATURE_INIT_ZERO                 {_ZC_TEMP_LOC_MIN, 0}
@@ -457,24 +457,24 @@ extern "C" {
 #define ZC_OCP_CONFIG_INIT_ZERO                  {0, 0, 0, 0, 0}
 #define ZC_OUVP_CONFIG_INIT_ZERO                 {0, 0}
 #define ZC_OUFP_CONFIG_INIT_ZERO                 {0, 0}
-#define ZC_COAP_CONFIG_INIT_ZERO                 {0}
+#define ZC_NOTIF_CONFIG_INIT_ZERO                {0}
 #define ZC_CALIB_CONFIG_INIT_ZERO                {_ZC_CALIB_TYPE_MIN, {0, {0}}}
 #define ZC_CONFIG_INIT_ZERO                      {0, {ZC_CURVE_CONFIG_INIT_ZERO}}
-#define ZC_VERSION_REQUEST_INIT_ZERO             {0}
-#define ZC_STATUS_REQUEST_INIT_ZERO              {0}
-#define ZC_DEVICE_CMD_REQUEST_INIT_ZERO          {_ZC_DEVICE_CMD_MIN}
-#define ZC_SET_CONFIG_REQUEST_INIT_ZERO          {false, ZC_CONFIG_INIT_ZERO}
-#define ZC_GET_CURVE_CONFIG_REQUEST_INIT_ZERO    {_ZC_FLOW_DIRECTION_MIN}
-#define ZC_GET_CSOM_CONFIG_REQUEST_INIT_ZERO     {0}
-#define ZC_GET_OCP_CONFIG_REQUEST_INIT_ZERO      {0}
-#define ZC_GET_OUVP_CONFIG_REQUEST_INIT_ZERO     {0}
-#define ZC_GET_OUFP_CONFIG_REQUEST_INIT_ZERO     {0}
-#define ZC_GET_COAP_CONFIG_REQUEST_INIT_ZERO     {0}
-#define ZC_GET_CALIB_CONFIG_REQUEST_INIT_ZERO    {_ZC_CALIB_TYPE_MIN}
-#define ZC_GET_CONFIG_REQUEST_INIT_ZERO          {0, {ZC_GET_CURVE_CONFIG_REQUEST_INIT_ZERO}}
+#define ZC_REQUEST_VERSION_INIT_ZERO             {0}
+#define ZC_REQUEST_STATUS_INIT_ZERO              {0}
+#define ZC_REQUEST_DEVICE_CMD_INIT_ZERO          {_ZC_DEVICE_CMD_MIN}
+#define ZC_REQUEST_SET_CONFIG_INIT_ZERO          {false, ZC_CONFIG_INIT_ZERO}
+#define ZC_REQUEST_GET_CONFIG_CURVE_INIT_ZERO    {_ZC_FLOW_DIRECTION_MIN}
+#define ZC_REQUEST_GET_CONFIG_CSOM_INIT_ZERO     {0}
+#define ZC_REQUEST_GET_CONFIG_OCP_INIT_ZERO      {0}
+#define ZC_REQUEST_GET_CONFIG_OUVP_INIT_ZERO     {0}
+#define ZC_REQUEST_GET_CONFIG_OUFP_INIT_ZERO     {0}
+#define ZC_REQUEST_GET_CONFIG_NOTIF_INIT_ZERO    {0}
+#define ZC_REQUEST_GET_CONFIG_CALIB_INIT_ZERO    {_ZC_CALIB_TYPE_MIN}
+#define ZC_REQUEST_GET_CONFIG_INIT_ZERO          {0, {ZC_REQUEST_GET_CONFIG_CURVE_INIT_ZERO}}
 #define ZC_ERROR_INIT_ZERO                       {0}
 #define ZC_RESPONSE_INIT_ZERO                    {0, {ZC_VERSION_INIT_ZERO}}
-#define ZC_REQUEST_INIT_ZERO                     {0, {ZC_VERSION_REQUEST_INIT_ZERO}}
+#define ZC_REQUEST_INIT_ZERO                     {0, {ZC_REQUEST_VERSION_INIT_ZERO}}
 #define ZC_MESSAGE_INIT_ZERO                     {0, {ZC_REQUEST_INIT_ZERO}}
 
 /* Field tags (for use in manual encoding/decoding) */
@@ -512,7 +512,7 @@ extern "C" {
 #define ZC_OUVP_CONFIG_UPPER_TAG                 2
 #define ZC_OUFP_CONFIG_LOWER_TAG                 1
 #define ZC_OUFP_CONFIG_UPPER_TAG                 2
-#define ZC_COAP_CONFIG_OBS_INTERVAL_TAG          1
+#define ZC_NOTIF_CONFIG_INTERVAL_TAG             1
 #define ZC_CALIB_CONFIG_TYPE_TAG                 1
 #define ZC_CALIB_CONFIG_ARG_TAG                  2
 #define ZC_CONFIG_CURVE_TAG                      1
@@ -520,26 +520,26 @@ extern "C" {
 #define ZC_CONFIG_OCP_TAG                        3
 #define ZC_CONFIG_OUV_TAG                        4
 #define ZC_CONFIG_OUF_TAG                        5
-#define ZC_CONFIG_COAP_TAG                       6
+#define ZC_CONFIG_NOTIF_TAG                      6
 #define ZC_CONFIG_CALIB_TAG                      7
-#define ZC_VERSION_REQUEST_NULL_TAG              1
-#define ZC_STATUS_REQUEST_NULL_TAG               1
-#define ZC_DEVICE_CMD_REQUEST_CMD_TAG            1
-#define ZC_SET_CONFIG_REQUEST_CONFIG_TAG         1
-#define ZC_GET_CURVE_CONFIG_REQUEST_DIRECTION_TAG 1
-#define ZC_GET_CSOM_CONFIG_REQUEST_NULL_TAG      1
-#define ZC_GET_OCP_CONFIG_REQUEST_NULL_TAG       1
-#define ZC_GET_OUVP_CONFIG_REQUEST_NULL_TAG      1
-#define ZC_GET_OUFP_CONFIG_REQUEST_NULL_TAG      1
-#define ZC_GET_COAP_CONFIG_REQUEST_NULL_TAG      1
-#define ZC_GET_CALIB_CONFIG_REQUEST_TYPE_TAG     1
-#define ZC_GET_CONFIG_REQUEST_CURVE_TAG          1
-#define ZC_GET_CONFIG_REQUEST_CSOM_TAG           2
-#define ZC_GET_CONFIG_REQUEST_OCP_TAG            3
-#define ZC_GET_CONFIG_REQUEST_OUV_TAG            4
-#define ZC_GET_CONFIG_REQUEST_OUF_TAG            5
-#define ZC_GET_CONFIG_REQUEST_COAP_TAG           6
-#define ZC_GET_CONFIG_REQUEST_CALIB_TAG          7
+#define ZC_REQUEST_VERSION_NULL_TAG              1
+#define ZC_REQUEST_STATUS_NULL_TAG               1
+#define ZC_REQUEST_DEVICE_CMD_CMD_TAG            1
+#define ZC_REQUEST_SET_CONFIG_CONFIG_TAG         1
+#define ZC_REQUEST_GET_CONFIG_CURVE_DIRECTION_TAG 1
+#define ZC_REQUEST_GET_CONFIG_CSOM_NULL_TAG      1
+#define ZC_REQUEST_GET_CONFIG_OCP_NULL_TAG       1
+#define ZC_REQUEST_GET_CONFIG_OUVP_NULL_TAG      1
+#define ZC_REQUEST_GET_CONFIG_OUFP_NULL_TAG      1
+#define ZC_REQUEST_GET_CONFIG_NOTIF_NULL_TAG     1
+#define ZC_REQUEST_GET_CONFIG_CALIB_TYPE_TAG     1
+#define ZC_REQUEST_GET_CONFIG_CURVE_TAG          1
+#define ZC_REQUEST_GET_CONFIG_CSOM_TAG           2
+#define ZC_REQUEST_GET_CONFIG_OCP_TAG            3
+#define ZC_REQUEST_GET_CONFIG_OUV_TAG            4
+#define ZC_REQUEST_GET_CONFIG_OUF_TAG            5
+#define ZC_REQUEST_GET_CONFIG_NOTIF_TAG          6
+#define ZC_REQUEST_GET_CONFIG_CALIB_TAG          7
 #define ZC_ERROR_CODE_TAG                        1
 #define ZC_RESPONSE_VERSION_TAG                  1
 #define ZC_RESPONSE_STATUS_TAG                   2
@@ -631,10 +631,10 @@ X(a, STATIC,   SINGULAR, UINT32,   upper,             2)
 #define ZC_OUFP_CONFIG_CALLBACK NULL
 #define ZC_OUFP_CONFIG_DEFAULT NULL
 
-#define ZC_COAP_CONFIG_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UINT32,   obs_interval,      1)
-#define ZC_COAP_CONFIG_CALLBACK NULL
-#define ZC_COAP_CONFIG_DEFAULT NULL
+#define ZC_NOTIF_CONFIG_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UINT32,   interval,          1)
+#define ZC_NOTIF_CONFIG_CALLBACK NULL
+#define ZC_NOTIF_CONFIG_DEFAULT NULL
 
 #define ZC_CALIB_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    type,              1) \
@@ -648,7 +648,7 @@ X(a, STATIC,   ONEOF,    MESSAGE,  (config,csom,config.csom),   2) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocp,config.ocp),   3) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ouv,config.ouv),   4) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ouf,config.ouf),   5) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (config,coap,config.coap),   6) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (config,notif,config.notif),   6) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,calib,config.calib),   7)
 #define ZC_CONFIG_CALLBACK NULL
 #define ZC_CONFIG_DEFAULT NULL
@@ -657,82 +657,82 @@ X(a, STATIC,   ONEOF,    MESSAGE,  (config,calib,config.calib),   7)
 #define zc_config_t_config_ocp_MSGTYPE zc_ocp_config_t
 #define zc_config_t_config_ouv_MSGTYPE zc_ouvp_config_t
 #define zc_config_t_config_ouf_MSGTYPE zc_oufp_config_t
-#define zc_config_t_config_coap_MSGTYPE zc_coap_config_t
+#define zc_config_t_config_notif_MSGTYPE zc_notif_config_t
 #define zc_config_t_config_calib_MSGTYPE zc_calib_config_t
 
-#define ZC_VERSION_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_VERSION_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_VERSION_REQUEST_CALLBACK NULL
-#define ZC_VERSION_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_VERSION_CALLBACK NULL
+#define ZC_REQUEST_VERSION_DEFAULT NULL
 
-#define ZC_STATUS_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_STATUS_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_STATUS_REQUEST_CALLBACK NULL
-#define ZC_STATUS_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_STATUS_CALLBACK NULL
+#define ZC_REQUEST_STATUS_DEFAULT NULL
 
-#define ZC_DEVICE_CMD_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_DEVICE_CMD_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    cmd,               1)
-#define ZC_DEVICE_CMD_REQUEST_CALLBACK NULL
-#define ZC_DEVICE_CMD_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_DEVICE_CMD_CALLBACK NULL
+#define ZC_REQUEST_DEVICE_CMD_DEFAULT NULL
 
-#define ZC_SET_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_SET_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  config,            1)
-#define ZC_SET_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_SET_CONFIG_REQUEST_DEFAULT NULL
-#define zc_set_config_request_t_config_MSGTYPE zc_config_t
+#define ZC_REQUEST_SET_CONFIG_CALLBACK NULL
+#define ZC_REQUEST_SET_CONFIG_DEFAULT NULL
+#define zc_request_set_config_t_config_MSGTYPE zc_config_t
 
-#define ZC_GET_CURVE_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_CURVE_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    direction,         1)
-#define ZC_GET_CURVE_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_CURVE_CONFIG_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_CURVE_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_CURVE_DEFAULT NULL
 
-#define ZC_GET_CSOM_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_CSOM_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_GET_CSOM_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_CSOM_CONFIG_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_CSOM_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_CSOM_DEFAULT NULL
 
-#define ZC_GET_OCP_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_OCP_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_GET_OCP_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_OCP_CONFIG_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_OCP_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_OCP_DEFAULT NULL
 
-#define ZC_GET_OUVP_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_OUVP_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_GET_OUVP_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_OUVP_CONFIG_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_OUVP_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_OUVP_DEFAULT NULL
 
-#define ZC_GET_OUFP_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_OUFP_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_GET_OUFP_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_OUFP_CONFIG_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_OUFP_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_OUFP_DEFAULT NULL
 
-#define ZC_GET_COAP_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_NOTIF_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_GET_COAP_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_COAP_CONFIG_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_NOTIF_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_NOTIF_DEFAULT NULL
 
-#define ZC_GET_CALIB_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_CALIB_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    type,              1)
-#define ZC_GET_CALIB_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_CALIB_CONFIG_REQUEST_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_CALIB_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_CALIB_DEFAULT NULL
 
-#define ZC_GET_CONFIG_REQUEST_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,curve,config.curve),   1) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,csom,config.csom),   2) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocp,config.ocp),   3) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ouv,config.ouv),   4) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ouf,config.ouf),   5) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (config,coap,config.coap),   6) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (config,notif,config.notif),   6) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,calib,config.calib),   7)
-#define ZC_GET_CONFIG_REQUEST_CALLBACK NULL
-#define ZC_GET_CONFIG_REQUEST_DEFAULT NULL
-#define zc_get_config_request_t_config_curve_MSGTYPE zc_get_curve_config_request_t
-#define zc_get_config_request_t_config_csom_MSGTYPE zc_get_csom_config_request_t
-#define zc_get_config_request_t_config_ocp_MSGTYPE zc_get_ocp_config_request_t
-#define zc_get_config_request_t_config_ouv_MSGTYPE zc_get_ouvp_config_request_t
-#define zc_get_config_request_t_config_ouf_MSGTYPE zc_get_oufp_config_request_t
-#define zc_get_config_request_t_config_coap_MSGTYPE zc_get_coap_config_request_t
-#define zc_get_config_request_t_config_calib_MSGTYPE zc_get_calib_config_request_t
+#define ZC_REQUEST_GET_CONFIG_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_DEFAULT NULL
+#define zc_request_get_config_t_config_curve_MSGTYPE zc_request_get_config_curve_t
+#define zc_request_get_config_t_config_csom_MSGTYPE zc_request_get_config_csom_t
+#define zc_request_get_config_t_config_ocp_MSGTYPE zc_request_get_config_ocp_t
+#define zc_request_get_config_t_config_ouv_MSGTYPE zc_request_get_config_ouvp_t
+#define zc_request_get_config_t_config_ouf_MSGTYPE zc_request_get_config_oufp_t
+#define zc_request_get_config_t_config_notif_MSGTYPE zc_request_get_config_notif_t
+#define zc_request_get_config_t_config_calib_MSGTYPE zc_request_get_config_calib_t
 
 #define ZC_ERROR_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   code,              1)
@@ -759,11 +759,11 @@ X(a, STATIC,   ONEOF,    MESSAGE,  (msg,set_config,msg.set_config),   4) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (msg,get_config,msg.get_config),   5)
 #define ZC_REQUEST_CALLBACK NULL
 #define ZC_REQUEST_DEFAULT NULL
-#define zc_request_t_msg_version_MSGTYPE zc_version_request_t
-#define zc_request_t_msg_status_MSGTYPE zc_status_request_t
-#define zc_request_t_msg_cmd_MSGTYPE zc_device_cmd_request_t
-#define zc_request_t_msg_set_config_MSGTYPE zc_set_config_request_t
-#define zc_request_t_msg_get_config_MSGTYPE zc_get_config_request_t
+#define zc_request_t_msg_version_MSGTYPE zc_request_version_t
+#define zc_request_t_msg_status_MSGTYPE zc_request_status_t
+#define zc_request_t_msg_cmd_MSGTYPE zc_request_device_cmd_t
+#define zc_request_t_msg_set_config_MSGTYPE zc_request_set_config_t
+#define zc_request_t_msg_get_config_MSGTYPE zc_request_get_config_t
 
 #define ZC_MESSAGE_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (msg,req,msg.req),   1) \
@@ -783,21 +783,21 @@ extern const pb_msgdesc_t zc_curve_config_t_msg;
 extern const pb_msgdesc_t zc_ocp_config_t_msg;
 extern const pb_msgdesc_t zc_ouvp_config_t_msg;
 extern const pb_msgdesc_t zc_oufp_config_t_msg;
-extern const pb_msgdesc_t zc_coap_config_t_msg;
+extern const pb_msgdesc_t zc_notif_config_t_msg;
 extern const pb_msgdesc_t zc_calib_config_t_msg;
 extern const pb_msgdesc_t zc_config_t_msg;
-extern const pb_msgdesc_t zc_version_request_t_msg;
-extern const pb_msgdesc_t zc_status_request_t_msg;
-extern const pb_msgdesc_t zc_device_cmd_request_t_msg;
-extern const pb_msgdesc_t zc_set_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_curve_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_csom_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_ocp_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_ouvp_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_oufp_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_coap_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_calib_config_request_t_msg;
-extern const pb_msgdesc_t zc_get_config_request_t_msg;
+extern const pb_msgdesc_t zc_request_version_t_msg;
+extern const pb_msgdesc_t zc_request_status_t_msg;
+extern const pb_msgdesc_t zc_request_device_cmd_t_msg;
+extern const pb_msgdesc_t zc_request_set_config_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_curve_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_csom_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_ocp_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_ouvp_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_oufp_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_notif_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_calib_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_t_msg;
 extern const pb_msgdesc_t zc_error_t_msg;
 extern const pb_msgdesc_t zc_response_t_msg;
 extern const pb_msgdesc_t zc_request_t_msg;
@@ -814,21 +814,21 @@ extern const pb_msgdesc_t zc_message_t_msg;
 #define ZC_OCP_CONFIG_FIELDS &zc_ocp_config_t_msg
 #define ZC_OUVP_CONFIG_FIELDS &zc_ouvp_config_t_msg
 #define ZC_OUFP_CONFIG_FIELDS &zc_oufp_config_t_msg
-#define ZC_COAP_CONFIG_FIELDS &zc_coap_config_t_msg
+#define ZC_NOTIF_CONFIG_FIELDS &zc_notif_config_t_msg
 #define ZC_CALIB_CONFIG_FIELDS &zc_calib_config_t_msg
 #define ZC_CONFIG_FIELDS &zc_config_t_msg
-#define ZC_VERSION_REQUEST_FIELDS &zc_version_request_t_msg
-#define ZC_STATUS_REQUEST_FIELDS &zc_status_request_t_msg
-#define ZC_DEVICE_CMD_REQUEST_FIELDS &zc_device_cmd_request_t_msg
-#define ZC_SET_CONFIG_REQUEST_FIELDS &zc_set_config_request_t_msg
-#define ZC_GET_CURVE_CONFIG_REQUEST_FIELDS &zc_get_curve_config_request_t_msg
-#define ZC_GET_CSOM_CONFIG_REQUEST_FIELDS &zc_get_csom_config_request_t_msg
-#define ZC_GET_OCP_CONFIG_REQUEST_FIELDS &zc_get_ocp_config_request_t_msg
-#define ZC_GET_OUVP_CONFIG_REQUEST_FIELDS &zc_get_ouvp_config_request_t_msg
-#define ZC_GET_OUFP_CONFIG_REQUEST_FIELDS &zc_get_oufp_config_request_t_msg
-#define ZC_GET_COAP_CONFIG_REQUEST_FIELDS &zc_get_coap_config_request_t_msg
-#define ZC_GET_CALIB_CONFIG_REQUEST_FIELDS &zc_get_calib_config_request_t_msg
-#define ZC_GET_CONFIG_REQUEST_FIELDS &zc_get_config_request_t_msg
+#define ZC_REQUEST_VERSION_FIELDS &zc_request_version_t_msg
+#define ZC_REQUEST_STATUS_FIELDS &zc_request_status_t_msg
+#define ZC_REQUEST_DEVICE_CMD_FIELDS &zc_request_device_cmd_t_msg
+#define ZC_REQUEST_SET_CONFIG_FIELDS &zc_request_set_config_t_msg
+#define ZC_REQUEST_GET_CONFIG_CURVE_FIELDS &zc_request_get_config_curve_t_msg
+#define ZC_REQUEST_GET_CONFIG_CSOM_FIELDS &zc_request_get_config_csom_t_msg
+#define ZC_REQUEST_GET_CONFIG_OCP_FIELDS &zc_request_get_config_ocp_t_msg
+#define ZC_REQUEST_GET_CONFIG_OUVP_FIELDS &zc_request_get_config_ouvp_t_msg
+#define ZC_REQUEST_GET_CONFIG_OUFP_FIELDS &zc_request_get_config_oufp_t_msg
+#define ZC_REQUEST_GET_CONFIG_NOTIF_FIELDS &zc_request_get_config_notif_t_msg
+#define ZC_REQUEST_GET_CONFIG_CALIB_FIELDS &zc_request_get_config_calib_t_msg
+#define ZC_REQUEST_GET_CONFIG_FIELDS &zc_request_get_config_t_msg
 #define ZC_ERROR_FIELDS &zc_error_t_msg
 #define ZC_RESPONSE_FIELDS &zc_response_t_msg
 #define ZC_REQUEST_FIELDS &zc_request_t_msg
@@ -836,33 +836,33 @@ extern const pb_msgdesc_t zc_message_t_msg;
 
 /* Maximum encoded size of messages (where known) */
 #define ZC_CALIB_CONFIG_SIZE                     12
-#define ZC_COAP_CONFIG_SIZE                      4
 #define ZC_CONFIG_SIZE                           197
 #define ZC_CSOM_CONFIG_SIZE                      12
 #define ZC_CSOM_MOD_CONFIG_SIZE                  8
 #define ZC_CURVE_CONFIG_SIZE                     194
 #define ZC_CURVE_POINT_SIZE                      10
-#define ZC_DEVICE_CMD_REQUEST_SIZE               2
 #define ZC_ERROR_SIZE                            4
-#define ZC_GET_CALIB_CONFIG_REQUEST_SIZE         2
-#define ZC_GET_COAP_CONFIG_REQUEST_SIZE          6
-#define ZC_GET_CONFIG_REQUEST_SIZE               8
-#define ZC_GET_CSOM_CONFIG_REQUEST_SIZE          6
-#define ZC_GET_CURVE_CONFIG_REQUEST_SIZE         2
-#define ZC_GET_OCP_CONFIG_REQUEST_SIZE           6
-#define ZC_GET_OUFP_CONFIG_REQUEST_SIZE          6
-#define ZC_GET_OUVP_CONFIG_REQUEST_SIZE          6
 #define ZC_MESSAGE_SIZE                          206
+#define ZC_NOTIF_CONFIG_SIZE                     4
 #define ZC_OCP_CONFIG_SIZE                       18
 #define ZC_OUFP_CONFIG_SIZE                      12
 #define ZC_OUVP_CONFIG_SIZE                      8
+#define ZC_REQUEST_DEVICE_CMD_SIZE               2
+#define ZC_REQUEST_GET_CONFIG_CALIB_SIZE         2
+#define ZC_REQUEST_GET_CONFIG_CSOM_SIZE          6
+#define ZC_REQUEST_GET_CONFIG_CURVE_SIZE         2
+#define ZC_REQUEST_GET_CONFIG_NOTIF_SIZE         6
+#define ZC_REQUEST_GET_CONFIG_OCP_SIZE           6
+#define ZC_REQUEST_GET_CONFIG_OUFP_SIZE          6
+#define ZC_REQUEST_GET_CONFIG_OUVP_SIZE          6
+#define ZC_REQUEST_GET_CONFIG_SIZE               8
+#define ZC_REQUEST_SET_CONFIG_SIZE               200
 #define ZC_REQUEST_SIZE                          203
+#define ZC_REQUEST_STATUS_SIZE                   6
+#define ZC_REQUEST_VERSION_SIZE                  6
 #define ZC_RESPONSE_SIZE                         200
-#define ZC_SET_CONFIG_REQUEST_SIZE               200
-#define ZC_STATUS_REQUEST_SIZE                   6
 #define ZC_STATUS_SIZE                           92
 #define ZC_TEMPERATURE_SIZE                      13
-#define ZC_VERSION_REQUEST_SIZE                  6
 #define ZC_VERSION_SIZE                          43
 
 #ifdef __cplusplus

@@ -22,7 +22,7 @@ ZCOcpConfig.rec_attempts	int_size:IS_16
 ZCOuvpConfig.lower		int_size:IS_16
 ZCOuvpConfig.upper		int_size:IS_16
 
-ZCCoapConfig.obs_interval	int_size:IS_16
+ZCNotifConfig.interval		int_size:IS_16
 
 ZCCalibConfig.arg		max_size:8
 

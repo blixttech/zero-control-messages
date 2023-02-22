@@ -36,7 +36,7 @@ PB_BIND(ZC_OUVP_CONFIG, zc_ouvp_config_t, AUTO)
 PB_BIND(ZC_OUFP_CONFIG, zc_oufp_config_t, AUTO)
 
 
-PB_BIND(ZC_COAP_CONFIG, zc_coap_config_t, AUTO)
+PB_BIND(ZC_NOTIF_CONFIG, zc_notif_config_t, AUTO)
 
 
 PB_BIND(ZC_CALIB_CONFIG, zc_calib_config_t, AUTO)
@@ -45,40 +45,40 @@ PB_BIND(ZC_CALIB_CONFIG, zc_calib_config_t, AUTO)
 PB_BIND(ZC_CONFIG, zc_config_t, AUTO)
 
 
-PB_BIND(ZC_VERSION_REQUEST, zc_version_request_t, AUTO)
+PB_BIND(ZC_REQUEST_VERSION, zc_request_version_t, AUTO)
 
 
-PB_BIND(ZC_STATUS_REQUEST, zc_status_request_t, AUTO)
+PB_BIND(ZC_REQUEST_STATUS, zc_request_status_t, AUTO)
 
 
-PB_BIND(ZC_DEVICE_CMD_REQUEST, zc_device_cmd_request_t, AUTO)
+PB_BIND(ZC_REQUEST_DEVICE_CMD, zc_request_device_cmd_t, AUTO)
 
 
-PB_BIND(ZC_SET_CONFIG_REQUEST, zc_set_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_SET_CONFIG, zc_request_set_config_t, AUTO)
 
 
-PB_BIND(ZC_GET_CURVE_CONFIG_REQUEST, zc_get_curve_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_CURVE, zc_request_get_config_curve_t, AUTO)
 
 
-PB_BIND(ZC_GET_CSOM_CONFIG_REQUEST, zc_get_csom_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_CSOM, zc_request_get_config_csom_t, AUTO)
 
 
-PB_BIND(ZC_GET_OCP_CONFIG_REQUEST, zc_get_ocp_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_OCP, zc_request_get_config_ocp_t, AUTO)
 
 
-PB_BIND(ZC_GET_OUVP_CONFIG_REQUEST, zc_get_ouvp_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_OUVP, zc_request_get_config_ouvp_t, AUTO)
 
 
-PB_BIND(ZC_GET_OUFP_CONFIG_REQUEST, zc_get_oufp_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_OUFP, zc_request_get_config_oufp_t, AUTO)
 
 
-PB_BIND(ZC_GET_COAP_CONFIG_REQUEST, zc_get_coap_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_NOTIF, zc_request_get_config_notif_t, AUTO)
 
 
-PB_BIND(ZC_GET_CALIB_CONFIG_REQUEST, zc_get_calib_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_CALIB, zc_request_get_config_calib_t, AUTO)
 
 
-PB_BIND(ZC_GET_CONFIG_REQUEST, zc_get_config_request_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG, zc_request_get_config_t, AUTO)
 
 
 PB_BIND(ZC_ERROR, zc_error_t, AUTO)

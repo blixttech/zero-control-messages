@@ -145,9 +145,9 @@ message ZCOufpConfig {
 	uint32 upper = 2; /* Upper limit in millihertz. */
 }
 
-/* CoAP configuration. */
-message ZCCoapConfig {
-	uint32 obs_interval = 1; /* Observer notification interval in milliseconds.  */
+/* Notification configuration. */
+message ZCNotifConfig {
+	uint32 interval = 1; /* Notification interval in milliseconds.  */
 }
 
 /* Calibration configuration. */
@@ -164,76 +164,76 @@ message ZCConfig {
 		ZCOcpConfig ocp	    = 3; /* Over current protection. */
 		ZCOuvpConfig ouv    = 4; /* Over/under voltage protection. */
 		ZCOufpConfig ouf    = 5; /* Over/under frequency protection. */
-		ZCCoapConfig coap   = 6; /* CoAP. */
+		ZCNotifConfig notif = 6; /* Notification. */
 		ZCCalibConfig calib = 7; /* Calibration. */
 	}
 }
 
 /* Version request. */
-message ZCVersionRequest {
+message ZCRequestVersion {
 	uint32 null = 1;
 }
 
 /* Status request. */
-message ZCStatusRequest {
+message ZCRequestStatus {
 	uint32 null = 1;
 }
 
 /* Device command request. */
-message ZCDeviceCmdRequest {
+message ZCRequestDeviceCmd {
 	ZCDeviceCmd cmd = 1;
 }
 
 /* Set configuration request */
-message ZCSetConfigRequest {
+message ZCRequestSetConfig {
 	ZCConfig config = 1;
 }
 
 /* Get curve configuration request. */
-message ZCGetCurveConfigRequest {
+message ZCRequestGetConfigCurve {
 	ZCFlowDirection direction = 1;
 }
 
 /* Get closed-state operation mode configuration request. */
-message ZCGetCsomConfigRequest {
+message ZCRequestGetConfigCsom {
 	uint32 null = 1;
 }
 
 /* Get over current protection configuration request. */
-message ZCGetOcpConfigRequest {
+message ZCRequestGetConfigOcp {
 	uint32 null = 1;
 }
 
 /* Get over/under voltage protection configuration request. */
-message ZCGetOuvpConfigRequest {
+message ZCRequestGetConfigOuvp {
 	uint32 null = 1;
 }
 
 /* Get over/under frequency protection configuration request. */
-message ZCGetOufpConfigRequest {
+message ZCRequestGetConfigOufp {
 	uint32 null = 1;
 }
 
-/* Get CoAP configuration request. */
-message ZCGetCoapConfigRequest {
+/* Get notification configuration request. */
+message ZCRequestGetConfigNotif {
 	uint32 null = 1;
 }
 
 /* Get calibration configuration request. */
-message ZCGetCalibConfigRequest {
+message ZCRequestGetConfigCalib {
 	ZCCalibType type = 1;
 }
 
 /* Get configuration. */
-message ZCGetConfigRequest {
+message ZCRequestGetConfig {
 	oneof config {
-		ZCGetCurveConfigRequest curve = 1; /* Trip curve */
-		ZCGetCsomConfigRequest csom   = 2; /* Closed-state operation mode. */
-		ZCGetOcpConfigRequest ocp     = 3; /* Over current protection. */
-		ZCGetOuvpConfigRequest ouv    = 4; /* Over/under voltage protection. */
-		ZCGetOufpConfigRequest ouf    = 5; /* Over/under frequency protection. */
-		ZCGetCoapConfigRequest coap   = 6; /* CoAP. */
-		ZCGetCalibConfigRequest calib = 7; /* Calibration. */
+		ZCRequestGetConfigCurve curve = 1; /* Trip curve */
+		ZCRequestGetConfigCsom csom   = 2; /* Closed-state operation mode. */
+		ZCRequestGetConfigOcp ocp     = 3; /* Over current protection. */
+		ZCRequestGetConfigOuvp ouv    = 4; /* Over/under voltage protection. */
+		ZCRequestGetConfigOufp ouf    = 5; /* Over/under frequency protection. */
+		ZCRequestGetConfigNotif notif = 6; /* Notification. */
+		ZCRequestGetConfigCalib calib = 7; /* Calibration. */
 	}
 }
 
@@ -255,11 +255,11 @@ message ZCResponse {
 /* Request message. */
 message ZCRequest {
 	oneof msg {
-		ZCVersionRequest version      = 1;
-		ZCStatusRequest status	      = 2;
-		ZCDeviceCmdRequest cmd	      = 3;
-		ZCSetConfigRequest set_config = 4;
-		ZCGetConfigRequest get_config = 5;
+		ZCRequestVersion version      = 1;
+		ZCRequestStatus status	      = 2;
+		ZCRequestDeviceCmd cmd	      = 3;
+		ZCRequestSetConfig set_config = 4;
+		ZCRequestGetConfig get_config = 5;
 	}
 }
 
