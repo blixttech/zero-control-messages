@@ -269,28 +269,37 @@ typedef struct zc_error {
     uint16_t code; /* Non-zero values indicates an error condition. */
 } zc_error_t;
 
-/* Reponse payload. */
+/* Reponse message. */
 typedef struct zc_response {
-    pb_size_t which_payload;
+    pb_size_t which_msg;
     union {
         zc_version_t version;
         zc_status_t status;
         zc_config_t config;
         zc_error_t error;
-    } payload;
+    } msg;
 } zc_response_t;
 
-/* Request payload. */
+/* Request message. */
 typedef struct zc_request {
-    pb_size_t which_payload;
+    pb_size_t which_msg;
     union {
         zc_version_request_t version;
         zc_status_request_t status;
         zc_device_cmd_request_t cmd;
         zc_set_config_request_t set_config;
         zc_get_config_request_t get_config;
-    } payload;
+    } msg;
 } zc_request_t;
+
+/* Control message. */
+typedef struct zc_message {
+    pb_size_t which_msg;
+    union {
+        zc_request_t req;
+        zc_response_t res;
+    } msg;
+} zc_message_t;
 
 
 #ifdef __cplusplus
@@ -407,6 +416,7 @@ extern "C" {
 
 
 
+
 /* Initializer values for message structs */
 #define ZC_VERSION_INIT_DEFAULT                  {_ZC_API_VERSION_MIN, false, {0, {0}}, false, {0, {0}}, false, {0, {0}}, false, {0, {0}}, false, 0}
 #define ZC_TEMPERATURE_INIT_DEFAULT              {_ZC_TEMP_LOC_MIN, 0}
@@ -436,6 +446,7 @@ extern "C" {
 #define ZC_ERROR_INIT_DEFAULT                    {0}
 #define ZC_RESPONSE_INIT_DEFAULT                 {0, {ZC_VERSION_INIT_DEFAULT}}
 #define ZC_REQUEST_INIT_DEFAULT                  {0, {ZC_VERSION_REQUEST_INIT_DEFAULT}}
+#define ZC_MESSAGE_INIT_DEFAULT                  {0, {ZC_REQUEST_INIT_DEFAULT}}
 #define ZC_VERSION_INIT_ZERO                     {_ZC_API_VERSION_MIN, false, {0, {0}}, false, {0, {0}}, false, {0, {0}}, false, {0, {0}}, false, 0}
 #define ZC_TEMPERATURE_INIT_ZERO                 {_ZC_TEMP_LOC_MIN, 0}
 #define ZC_STATUS_INIT_ZERO                      {0, _ZC_SWITCH_STATE_MIN, _ZC_DEVICE_STATE_MIN, _ZC_TRIP_CAUSE_MIN, 0, 0, 0, _ZC_FLOW_DIRECTION_MIN, 0, {ZC_TEMPERATURE_INIT_ZERO, ZC_TEMPERATURE_INIT_ZERO, ZC_TEMPERATURE_INIT_ZERO, ZC_TEMPERATURE_INIT_ZERO}}
@@ -464,6 +475,7 @@ extern "C" {
 #define ZC_ERROR_INIT_ZERO                       {0}
 #define ZC_RESPONSE_INIT_ZERO                    {0, {ZC_VERSION_INIT_ZERO}}
 #define ZC_REQUEST_INIT_ZERO                     {0, {ZC_VERSION_REQUEST_INIT_ZERO}}
+#define ZC_MESSAGE_INIT_ZERO                     {0, {ZC_REQUEST_INIT_ZERO}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ZC_VERSION_API_TAG                       1
@@ -538,6 +550,8 @@ extern "C" {
 #define ZC_REQUEST_CMD_TAG                       3
 #define ZC_REQUEST_SET_CONFIG_TAG                4
 #define ZC_REQUEST_GET_CONFIG_TAG                5
+#define ZC_MESSAGE_REQ_TAG                       1
+#define ZC_MESSAGE_RES_TAG                       2
 
 /* Struct field encoding specification for nanopb */
 #define ZC_VERSION_FIELDLIST(X, a) \
@@ -726,30 +740,38 @@ X(a, STATIC,   SINGULAR, UINT32,   code,              1)
 #define ZC_ERROR_DEFAULT NULL
 
 #define ZC_RESPONSE_FIELDLIST(X, a) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,version,payload.version),   1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,status,payload.status),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,config,payload.config),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,error,payload.error),   4)
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,version,msg.version),   1) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,status,msg.status),   2) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,config,msg.config),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,error,msg.error),   4)
 #define ZC_RESPONSE_CALLBACK NULL
 #define ZC_RESPONSE_DEFAULT NULL
-#define zc_response_t_payload_version_MSGTYPE zc_version_t
-#define zc_response_t_payload_status_MSGTYPE zc_status_t
-#define zc_response_t_payload_config_MSGTYPE zc_config_t
-#define zc_response_t_payload_error_MSGTYPE zc_error_t
+#define zc_response_t_msg_version_MSGTYPE zc_version_t
+#define zc_response_t_msg_status_MSGTYPE zc_status_t
+#define zc_response_t_msg_config_MSGTYPE zc_config_t
+#define zc_response_t_msg_error_MSGTYPE zc_error_t
 
 #define ZC_REQUEST_FIELDLIST(X, a) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,version,payload.version),   1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,status,payload.status),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,cmd,payload.cmd),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,set_config,payload.set_config),   4) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,get_config,payload.get_config),   5)
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,version,msg.version),   1) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,status,msg.status),   2) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,cmd,msg.cmd),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,set_config,msg.set_config),   4) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,get_config,msg.get_config),   5)
 #define ZC_REQUEST_CALLBACK NULL
 #define ZC_REQUEST_DEFAULT NULL
-#define zc_request_t_payload_version_MSGTYPE zc_version_request_t
-#define zc_request_t_payload_status_MSGTYPE zc_status_request_t
-#define zc_request_t_payload_cmd_MSGTYPE zc_device_cmd_request_t
-#define zc_request_t_payload_set_config_MSGTYPE zc_set_config_request_t
-#define zc_request_t_payload_get_config_MSGTYPE zc_get_config_request_t
+#define zc_request_t_msg_version_MSGTYPE zc_version_request_t
+#define zc_request_t_msg_status_MSGTYPE zc_status_request_t
+#define zc_request_t_msg_cmd_MSGTYPE zc_device_cmd_request_t
+#define zc_request_t_msg_set_config_MSGTYPE zc_set_config_request_t
+#define zc_request_t_msg_get_config_MSGTYPE zc_get_config_request_t
+
+#define ZC_MESSAGE_FIELDLIST(X, a) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,req,msg.req),   1) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (msg,res,msg.res),   2)
+#define ZC_MESSAGE_CALLBACK NULL
+#define ZC_MESSAGE_DEFAULT NULL
+#define zc_message_t_msg_req_MSGTYPE zc_request_t
+#define zc_message_t_msg_res_MSGTYPE zc_response_t
 
 extern const pb_msgdesc_t zc_version_t_msg;
 extern const pb_msgdesc_t zc_temperature_t_msg;
@@ -779,6 +801,7 @@ extern const pb_msgdesc_t zc_get_config_request_t_msg;
 extern const pb_msgdesc_t zc_error_t_msg;
 extern const pb_msgdesc_t zc_response_t_msg;
 extern const pb_msgdesc_t zc_request_t_msg;
+extern const pb_msgdesc_t zc_message_t_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define ZC_VERSION_FIELDS &zc_version_t_msg
@@ -809,6 +832,7 @@ extern const pb_msgdesc_t zc_request_t_msg;
 #define ZC_ERROR_FIELDS &zc_error_t_msg
 #define ZC_RESPONSE_FIELDS &zc_response_t_msg
 #define ZC_REQUEST_FIELDS &zc_request_t_msg
+#define ZC_MESSAGE_FIELDS &zc_message_t_msg
 
 /* Maximum encoded size of messages (where known) */
 #define ZC_CALIB_CONFIG_SIZE                     12
@@ -828,6 +852,7 @@ extern const pb_msgdesc_t zc_request_t_msg;
 #define ZC_GET_OCP_CONFIG_REQUEST_SIZE           6
 #define ZC_GET_OUFP_CONFIG_REQUEST_SIZE          6
 #define ZC_GET_OUVP_CONFIG_REQUEST_SIZE          6
+#define ZC_MESSAGE_SIZE                          206
 #define ZC_OCP_CONFIG_SIZE                       18
 #define ZC_OUFP_CONFIG_SIZE                      12
 #define ZC_OUVP_CONFIG_SIZE                      8

@@ -242,9 +242,9 @@ message ZCError {
 	uint32 code = 1; /* Non-zero values indicates an error condition. */
 }
 
-/* Reponse payload. */
+/* Reponse message. */
 message ZCResponse {
-	oneof payload {
+	oneof msg {
 		ZCVersion version = 1;
 		ZCStatus status	  = 2;
 		ZCConfig config	  = 3;
@@ -252,13 +252,21 @@ message ZCResponse {
 	}
 }
 
-/* Request payload. */
+/* Request message. */
 message ZCRequest {
-	oneof payload {
+	oneof msg {
 		ZCVersionRequest version      = 1;
 		ZCStatusRequest status	      = 2;
 		ZCDeviceCmdRequest cmd	      = 3;
 		ZCSetConfigRequest set_config = 4;
 		ZCGetConfigRequest get_config = 5;
+	}
+}
+
+/* Control message. */
+message ZCMessage {
+	oneof msg {
+		ZCRequest req  = 1;
+		ZCResponse res = 2;
 	}
 }

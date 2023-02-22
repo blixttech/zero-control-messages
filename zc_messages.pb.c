@@ -90,6 +90,9 @@ PB_BIND(ZC_RESPONSE, zc_response_t, AUTO)
 PB_BIND(ZC_REQUEST, zc_request_t, AUTO)
 
 
+PB_BIND(ZC_MESSAGE, zc_message_t, AUTO)
+
+
 
 
 
