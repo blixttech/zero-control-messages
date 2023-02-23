@@ -271,25 +271,25 @@ typedef struct zc_error {
 
 /* Reponse message. */
 typedef struct zc_response {
-    pb_size_t which_msg;
+    pb_size_t which_res;
     union {
         zc_version_t version;
         zc_status_t status;
         zc_config_t config;
         zc_error_t error;
-    } msg;
+    } res;
 } zc_response_t;
 
 /* Request message. */
 typedef struct zc_request {
-    pb_size_t which_msg;
+    pb_size_t which_req;
     union {
         zc_request_version_t version;
         zc_request_status_t status;
         zc_request_device_cmd_t cmd;
         zc_request_set_config_t set_config;
         zc_request_get_config_t get_config;
-    } msg;
+    } req;
 } zc_request_t;
 
 /* Control message. */
@@ -740,30 +740,30 @@ X(a, STATIC,   SINGULAR, UINT32,   code,              1)
 #define ZC_ERROR_DEFAULT NULL
 
 #define ZC_RESPONSE_FIELDLIST(X, a) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,version,msg.version),   1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,status,msg.status),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,config,msg.config),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,error,msg.error),   4)
+X(a, STATIC,   ONEOF,    MESSAGE,  (res,version,res.version),   1) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (res,status,res.status),   2) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (res,config,res.config),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (res,error,res.error),   4)
 #define ZC_RESPONSE_CALLBACK NULL
 #define ZC_RESPONSE_DEFAULT NULL
-#define zc_response_t_msg_version_MSGTYPE zc_version_t
-#define zc_response_t_msg_status_MSGTYPE zc_status_t
-#define zc_response_t_msg_config_MSGTYPE zc_config_t
-#define zc_response_t_msg_error_MSGTYPE zc_error_t
+#define zc_response_t_res_version_MSGTYPE zc_version_t
+#define zc_response_t_res_status_MSGTYPE zc_status_t
+#define zc_response_t_res_config_MSGTYPE zc_config_t
+#define zc_response_t_res_error_MSGTYPE zc_error_t
 
 #define ZC_REQUEST_FIELDLIST(X, a) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,version,msg.version),   1) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,status,msg.status),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,cmd,msg.cmd),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,set_config,msg.set_config),   4) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (msg,get_config,msg.get_config),   5)
+X(a, STATIC,   ONEOF,    MESSAGE,  (req,version,req.version),   1) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (req,status,req.status),   2) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (req,cmd,req.cmd),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (req,set_config,req.set_config),   4) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (req,get_config,req.get_config),   5)
 #define ZC_REQUEST_CALLBACK NULL
 #define ZC_REQUEST_DEFAULT NULL
-#define zc_request_t_msg_version_MSGTYPE zc_request_version_t
-#define zc_request_t_msg_status_MSGTYPE zc_request_status_t
-#define zc_request_t_msg_cmd_MSGTYPE zc_request_device_cmd_t
-#define zc_request_t_msg_set_config_MSGTYPE zc_request_set_config_t
-#define zc_request_t_msg_get_config_MSGTYPE zc_request_get_config_t
+#define zc_request_t_req_version_MSGTYPE zc_request_version_t
+#define zc_request_t_req_status_MSGTYPE zc_request_status_t
+#define zc_request_t_req_cmd_MSGTYPE zc_request_device_cmd_t
+#define zc_request_t_req_set_config_MSGTYPE zc_request_set_config_t
+#define zc_request_t_req_get_config_MSGTYPE zc_request_get_config_t
 
 #define ZC_MESSAGE_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (msg,req,msg.req),   1) \
