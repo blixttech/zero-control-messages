@@ -158,16 +158,16 @@ typedef struct zc_ocp_config {
 
 /* Over/under voltage protection configuration. */
 typedef struct zc_ouvp_config {
-    bool enabled; /* Set to true if enabled. */
     uint32_t lower; /* Lower limit in volts. */
     uint32_t upper; /* Upper limit in volts. */
+    bool enabled; /* Set to true if enabled. */
 } zc_ouvp_config_t;
 
 /* Over/under frequency protection configuration. */
 typedef struct zc_oufp_config {
-    bool enabled; /* Set to true if enabled. */
     uint32_t lower; /* Lower limit in millihertz. */
     uint32_t upper; /* Upper limit in millihertz. */
+    bool enabled; /* Set to true if enabled. */
 } zc_oufp_config_t;
 
 /* Notification configuration. */
@@ -510,12 +510,12 @@ extern "C" {
 #define ZC_OCP_CONFIG_REC_DELAY_TAG              3
 #define ZC_OCP_CONFIG_REC_ATTEMPTS_TAG           4
 #define ZC_OCP_CONFIG_REC_EN_TAG                 5
-#define ZC_OUVP_CONFIG_ENABLED_TAG               1
-#define ZC_OUVP_CONFIG_LOWER_TAG                 2
-#define ZC_OUVP_CONFIG_UPPER_TAG                 3
-#define ZC_OUFP_CONFIG_ENABLED_TAG               1
-#define ZC_OUFP_CONFIG_LOWER_TAG                 2
-#define ZC_OUFP_CONFIG_UPPER_TAG                 3
+#define ZC_OUVP_CONFIG_LOWER_TAG                 1
+#define ZC_OUVP_CONFIG_UPPER_TAG                 2
+#define ZC_OUVP_CONFIG_ENABLED_TAG               3
+#define ZC_OUFP_CONFIG_LOWER_TAG                 1
+#define ZC_OUFP_CONFIG_UPPER_TAG                 2
+#define ZC_OUFP_CONFIG_ENABLED_TAG               3
 #define ZC_NOTIF_CONFIG_INTERVAL_TAG             1
 #define ZC_CALIB_CONFIG_TYPE_TAG                 1
 #define ZC_CALIB_CONFIG_ARG_TAG                  2
@@ -624,16 +624,16 @@ X(a, STATIC,   SINGULAR, BOOL,     rec_en,            5)
 #define ZC_OCP_CONFIG_DEFAULT NULL
 
 #define ZC_OUVP_CONFIG_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, BOOL,     enabled,           1) \
-X(a, STATIC,   SINGULAR, UINT32,   lower,             2) \
-X(a, STATIC,   SINGULAR, UINT32,   upper,             3)
+X(a, STATIC,   SINGULAR, UINT32,   lower,             1) \
+X(a, STATIC,   SINGULAR, UINT32,   upper,             2) \
+X(a, STATIC,   SINGULAR, BOOL,     enabled,           3)
 #define ZC_OUVP_CONFIG_CALLBACK NULL
 #define ZC_OUVP_CONFIG_DEFAULT NULL
 
 #define ZC_OUFP_CONFIG_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, BOOL,     enabled,           1) \
-X(a, STATIC,   SINGULAR, UINT32,   lower,             2) \
-X(a, STATIC,   SINGULAR, UINT32,   upper,             3)
+X(a, STATIC,   SINGULAR, UINT32,   lower,             1) \
+X(a, STATIC,   SINGULAR, UINT32,   upper,             2) \
+X(a, STATIC,   SINGULAR, BOOL,     enabled,           3)
 #define ZC_OUFP_CONFIG_CALLBACK NULL
 #define ZC_OUFP_CONFIG_DEFAULT NULL
 
