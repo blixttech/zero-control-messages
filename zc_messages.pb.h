@@ -227,10 +227,10 @@ typedef struct zc_request_get_config_csom {
     uint32_t null;
 } zc_request_get_config_csom_t;
 
-/* Get over current protection configuration request. */
-typedef struct zc_request_get_config_ocp {
+/* Get hardware-based overcurrent protection configuration request. */
+typedef struct zc_request_get_config_ocp_hw {
     uint32_t null;
-} zc_request_get_config_ocp_t;
+} zc_request_get_config_ocp_hw_t;
 
 /* Get over/under voltage protection configuration request. */
 typedef struct zc_request_get_config_ouvp {
@@ -258,7 +258,7 @@ typedef struct zc_request_get_config {
     union {
         zc_request_get_config_curve_t curve; /* Trip curve */
         zc_request_get_config_csom_t csom; /* Closed-state operation mode. */
-        zc_request_get_config_ocp_t ocp; /* Over current protection. */
+        zc_request_get_config_ocp_hw_t ocp_hw; /* Over current protection. */
         zc_request_get_config_ouvp_t ouvp; /* Over/under voltage protection. */
         zc_request_get_config_oufp_t oufp; /* Over/under frequency protection. */
         zc_request_get_config_notif_t notif; /* Notification. */
@@ -439,7 +439,7 @@ extern "C" {
 #define ZC_REQUEST_SET_CONFIG_INIT_DEFAULT       {false, ZC_CONFIG_INIT_DEFAULT}
 #define ZC_REQUEST_GET_CONFIG_CURVE_INIT_DEFAULT {_ZC_FLOW_DIRECTION_MIN}
 #define ZC_REQUEST_GET_CONFIG_CSOM_INIT_DEFAULT  {0}
-#define ZC_REQUEST_GET_CONFIG_OCP_INIT_DEFAULT   {0}
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_INIT_DEFAULT {0}
 #define ZC_REQUEST_GET_CONFIG_OUVP_INIT_DEFAULT  {0}
 #define ZC_REQUEST_GET_CONFIG_OUFP_INIT_DEFAULT  {0}
 #define ZC_REQUEST_GET_CONFIG_NOTIF_INIT_DEFAULT {0}
@@ -468,7 +468,7 @@ extern "C" {
 #define ZC_REQUEST_SET_CONFIG_INIT_ZERO          {false, ZC_CONFIG_INIT_ZERO}
 #define ZC_REQUEST_GET_CONFIG_CURVE_INIT_ZERO    {_ZC_FLOW_DIRECTION_MIN}
 #define ZC_REQUEST_GET_CONFIG_CSOM_INIT_ZERO     {0}
-#define ZC_REQUEST_GET_CONFIG_OCP_INIT_ZERO      {0}
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_INIT_ZERO   {0}
 #define ZC_REQUEST_GET_CONFIG_OUVP_INIT_ZERO     {0}
 #define ZC_REQUEST_GET_CONFIG_OUFP_INIT_ZERO     {0}
 #define ZC_REQUEST_GET_CONFIG_NOTIF_INIT_ZERO    {0}
@@ -532,14 +532,14 @@ extern "C" {
 #define ZC_REQUEST_SET_CONFIG_CONFIG_TAG         1
 #define ZC_REQUEST_GET_CONFIG_CURVE_DIRECTION_TAG 1
 #define ZC_REQUEST_GET_CONFIG_CSOM_NULL_TAG      1
-#define ZC_REQUEST_GET_CONFIG_OCP_NULL_TAG       1
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_NULL_TAG    1
 #define ZC_REQUEST_GET_CONFIG_OUVP_NULL_TAG      1
 #define ZC_REQUEST_GET_CONFIG_OUFP_NULL_TAG      1
 #define ZC_REQUEST_GET_CONFIG_NOTIF_NULL_TAG     1
 #define ZC_REQUEST_GET_CONFIG_CALIB_TYPE_TAG     1
 #define ZC_REQUEST_GET_CONFIG_CURVE_TAG          1
 #define ZC_REQUEST_GET_CONFIG_CSOM_TAG           2
-#define ZC_REQUEST_GET_CONFIG_OCP_TAG            3
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_TAG         3
 #define ZC_REQUEST_GET_CONFIG_OUVP_TAG           4
 #define ZC_REQUEST_GET_CONFIG_OUFP_TAG           5
 #define ZC_REQUEST_GET_CONFIG_NOTIF_TAG          6
@@ -697,10 +697,10 @@ X(a, STATIC,   SINGULAR, UINT32,   null,              1)
 #define ZC_REQUEST_GET_CONFIG_CSOM_CALLBACK NULL
 #define ZC_REQUEST_GET_CONFIG_CSOM_DEFAULT NULL
 
-#define ZC_REQUEST_GET_CONFIG_OCP_FIELDLIST(X, a) \
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
-#define ZC_REQUEST_GET_CONFIG_OCP_CALLBACK NULL
-#define ZC_REQUEST_GET_CONFIG_OCP_DEFAULT NULL
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_CALLBACK NULL
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_DEFAULT NULL
 
 #define ZC_REQUEST_GET_CONFIG_OUVP_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   null,              1)
@@ -725,7 +725,7 @@ X(a, STATIC,   SINGULAR, UENUM,    type,              1)
 #define ZC_REQUEST_GET_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,curve,config.curve),   1) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,csom,config.csom),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocp,config.ocp),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocp_hw,config.ocp_hw),   3) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ouvp,config.ouvp),   4) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,oufp,config.oufp),   5) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,notif,config.notif),   6) \
@@ -734,7 +734,7 @@ X(a, STATIC,   ONEOF,    MESSAGE,  (config,calib,config.calib),   7)
 #define ZC_REQUEST_GET_CONFIG_DEFAULT NULL
 #define zc_request_get_config_t_config_curve_MSGTYPE zc_request_get_config_curve_t
 #define zc_request_get_config_t_config_csom_MSGTYPE zc_request_get_config_csom_t
-#define zc_request_get_config_t_config_ocp_MSGTYPE zc_request_get_config_ocp_t
+#define zc_request_get_config_t_config_ocp_hw_MSGTYPE zc_request_get_config_ocp_hw_t
 #define zc_request_get_config_t_config_ouvp_MSGTYPE zc_request_get_config_ouvp_t
 #define zc_request_get_config_t_config_oufp_MSGTYPE zc_request_get_config_oufp_t
 #define zc_request_get_config_t_config_notif_MSGTYPE zc_request_get_config_notif_t
@@ -798,7 +798,7 @@ extern const pb_msgdesc_t zc_request_device_cmd_t_msg;
 extern const pb_msgdesc_t zc_request_set_config_t_msg;
 extern const pb_msgdesc_t zc_request_get_config_curve_t_msg;
 extern const pb_msgdesc_t zc_request_get_config_csom_t_msg;
-extern const pb_msgdesc_t zc_request_get_config_ocp_t_msg;
+extern const pb_msgdesc_t zc_request_get_config_ocp_hw_t_msg;
 extern const pb_msgdesc_t zc_request_get_config_ouvp_t_msg;
 extern const pb_msgdesc_t zc_request_get_config_oufp_t_msg;
 extern const pb_msgdesc_t zc_request_get_config_notif_t_msg;
@@ -829,7 +829,7 @@ extern const pb_msgdesc_t zc_message_t_msg;
 #define ZC_REQUEST_SET_CONFIG_FIELDS &zc_request_set_config_t_msg
 #define ZC_REQUEST_GET_CONFIG_CURVE_FIELDS &zc_request_get_config_curve_t_msg
 #define ZC_REQUEST_GET_CONFIG_CSOM_FIELDS &zc_request_get_config_csom_t_msg
-#define ZC_REQUEST_GET_CONFIG_OCP_FIELDS &zc_request_get_config_ocp_t_msg
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_FIELDS &zc_request_get_config_ocp_hw_t_msg
 #define ZC_REQUEST_GET_CONFIG_OUVP_FIELDS &zc_request_get_config_ouvp_t_msg
 #define ZC_REQUEST_GET_CONFIG_OUFP_FIELDS &zc_request_get_config_oufp_t_msg
 #define ZC_REQUEST_GET_CONFIG_NOTIF_FIELDS &zc_request_get_config_notif_t_msg
@@ -858,7 +858,7 @@ extern const pb_msgdesc_t zc_message_t_msg;
 #define ZC_REQUEST_GET_CONFIG_CSOM_SIZE          6
 #define ZC_REQUEST_GET_CONFIG_CURVE_SIZE         2
 #define ZC_REQUEST_GET_CONFIG_NOTIF_SIZE         6
-#define ZC_REQUEST_GET_CONFIG_OCP_SIZE           6
+#define ZC_REQUEST_GET_CONFIG_OCP_HW_SIZE        6
 #define ZC_REQUEST_GET_CONFIG_OUFP_SIZE          6
 #define ZC_REQUEST_GET_CONFIG_OUVP_SIZE          6
 #define ZC_REQUEST_GET_CONFIG_SIZE               8

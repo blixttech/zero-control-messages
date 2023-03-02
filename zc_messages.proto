@@ -201,8 +201,8 @@ message ZCRequestGetConfigCsom {
 	uint32 null = 1;
 }
 
-/* Get over current protection configuration request. */
-message ZCRequestGetConfigOcp {
+/* Get hardware-based overcurrent protection configuration request. */
+message ZCRequestGetConfigOcpHw {
 	uint32 null = 1;
 }
 
@@ -229,13 +229,13 @@ message ZCRequestGetConfigCalib {
 /* Get configuration. */
 message ZCRequestGetConfig {
 	oneof config {
-		ZCRequestGetConfigCurve curve = 1; /* Trip curve */
-		ZCRequestGetConfigCsom csom   = 2; /* Closed-state operation mode. */
-		ZCRequestGetConfigOcp ocp     = 3; /* Over current protection. */
-		ZCRequestGetConfigOuvp ouvp   = 4; /* Over/under voltage protection. */
-		ZCRequestGetConfigOufp oufp   = 5; /* Over/under frequency protection. */
-		ZCRequestGetConfigNotif notif = 6; /* Notification. */
-		ZCRequestGetConfigCalib calib = 7; /* Calibration. */
+		ZCRequestGetConfigCurve curve  = 1; /* Trip curve */
+		ZCRequestGetConfigCsom csom    = 2; /* Closed-state operation mode. */
+		ZCRequestGetConfigOcpHw ocp_hw = 3; /* Over current protection. */
+		ZCRequestGetConfigOuvp ouvp    = 4; /* Over/under voltage protection. */
+		ZCRequestGetConfigOufp oufp    = 5; /* Over/under frequency protection. */
+		ZCRequestGetConfigNotif notif  = 6; /* Notification. */
+		ZCRequestGetConfigCalib calib  = 7; /* Calibration. */
 	}
 }
 

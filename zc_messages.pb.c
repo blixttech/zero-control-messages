@@ -63,7 +63,7 @@ PB_BIND(ZC_REQUEST_GET_CONFIG_CURVE, zc_request_get_config_curve_t, AUTO)
 PB_BIND(ZC_REQUEST_GET_CONFIG_CSOM, zc_request_get_config_csom_t, AUTO)
 
 
-PB_BIND(ZC_REQUEST_GET_CONFIG_OCP, zc_request_get_config_ocp_t, AUTO)
+PB_BIND(ZC_REQUEST_GET_CONFIG_OCP_HW, zc_request_get_config_ocp_hw_t, AUTO)
 
 
 PB_BIND(ZC_REQUEST_GET_CONFIG_OUVP, zc_request_get_config_ouvp_t, AUTO)
