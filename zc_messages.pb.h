@@ -188,7 +188,7 @@ typedef struct zc_config {
     union {
         zc_curve_config_t curve;
         zc_csom_config_t csom; /* Closed-state operation mode. */
-        zc_ocp_hw_config_t ocphw; /* Over current protection. */
+        zc_ocp_hw_config_t ocp_hw; /* Over current protection. */
         zc_ouvp_config_t ouvp; /* Over/under voltage protection. */
         zc_oufp_config_t oufp; /* Over/under frequency protection. */
         zc_notif_config_t notif; /* Notification. */
@@ -521,7 +521,7 @@ extern "C" {
 #define ZC_CALIB_CONFIG_ARG_TAG                  2
 #define ZC_CONFIG_CURVE_TAG                      1
 #define ZC_CONFIG_CSOM_TAG                       2
-#define ZC_CONFIG_OCPHW_TAG                      3
+#define ZC_CONFIG_OCP_HW_TAG                     3
 #define ZC_CONFIG_OUVP_TAG                       4
 #define ZC_CONFIG_OUFP_TAG                       5
 #define ZC_CONFIG_NOTIF_TAG                      6
@@ -651,7 +651,7 @@ X(a, STATIC,   SINGULAR, BYTES,    arg,               2)
 #define ZC_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,curve,config.curve),   1) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,csom,config.csom),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocphw,config.ocphw),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocp_hw,config.ocp_hw),   3) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ouvp,config.ouvp),   4) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,oufp,config.oufp),   5) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,notif,config.notif),   6) \
@@ -660,7 +660,7 @@ X(a, STATIC,   ONEOF,    MESSAGE,  (config,calib,config.calib),   7)
 #define ZC_CONFIG_DEFAULT NULL
 #define zc_config_t_config_curve_MSGTYPE zc_curve_config_t
 #define zc_config_t_config_csom_MSGTYPE zc_csom_config_t
-#define zc_config_t_config_ocphw_MSGTYPE zc_ocp_hw_config_t
+#define zc_config_t_config_ocp_hw_MSGTYPE zc_ocp_hw_config_t
 #define zc_config_t_config_ouvp_MSGTYPE zc_ouvp_config_t
 #define zc_config_t_config_oufp_MSGTYPE zc_oufp_config_t
 #define zc_config_t_config_notif_MSGTYPE zc_notif_config_t

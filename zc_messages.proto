@@ -161,13 +161,13 @@ message ZCCalibConfig {
 /* Device configuration. */
 message ZCConfig {
 	oneof config {
-		ZCCurveConfig curve = 1;
-		ZCCsomConfig csom   = 2; /* Closed-state operation mode. */
-		ZCOcpHwConfig ocphw = 3; /* Over current protection. */
-		ZCOuvpConfig ouvp   = 4; /* Over/under voltage protection. */
-		ZCOufpConfig oufp   = 5; /* Over/under frequency protection. */
-		ZCNotifConfig notif = 6; /* Notification. */
-		ZCCalibConfig calib = 7; /* Calibration. */
+		ZCCurveConfig curve  = 1;
+		ZCCsomConfig csom    = 2; /* Closed-state operation mode. */
+		ZCOcpHwConfig ocp_hw = 3; /* Over current protection. */
+		ZCOuvpConfig ouvp    = 4; /* Over/under voltage protection. */
+		ZCOufpConfig oufp    = 5; /* Over/under frequency protection. */
+		ZCNotifConfig notif  = 6; /* Notification. */
+		ZCCalibConfig calib  = 7; /* Calibration. */
 	}
 }
 
