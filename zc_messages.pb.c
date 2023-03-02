@@ -27,7 +27,7 @@ PB_BIND(ZC_CSOM_CONFIG, zc_csom_config_t, AUTO)
 PB_BIND(ZC_CURVE_CONFIG, zc_curve_config_t, AUTO)
 
 
-PB_BIND(ZC_OCP_CONFIG, zc_ocp_config_t, AUTO)
+PB_BIND(ZC_OCP_HW_CONFIG, zc_ocp_hw_config_t, AUTO)
 
 
 PB_BIND(ZC_OUVP_CONFIG, zc_ouvp_config_t, AUTO)

@@ -125,7 +125,7 @@ message ZCCurveConfig {
 }
 
 /* Hardware-based overcurrent protection configuration. */
-message ZCOcpConfig {
+message ZCOcpHwConfig {
 	uint32 limit	    = 1; /* Current limit in amperes. */
 	uint32 filter	    = 2; /* Jitter filter in nano seconds. */
 	uint32 rec_delay    = 3; /* Recovery time delay in microseconds. */
@@ -163,7 +163,7 @@ message ZCConfig {
 	oneof config {
 		ZCCurveConfig curve = 1;
 		ZCCsomConfig csom   = 2; /* Closed-state operation mode. */
-		ZCOcpConfig ocp	    = 3; /* Over current protection. */
+		ZCOcpHwConfig ocphw = 3; /* Over current protection. */
 		ZCOuvpConfig ouvp   = 4; /* Over/under voltage protection. */
 		ZCOufpConfig oufp   = 5; /* Over/under frequency protection. */
 		ZCNotifConfig notif = 6; /* Notification. */

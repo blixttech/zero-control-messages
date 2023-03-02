@@ -148,13 +148,13 @@ typedef struct zc_curve_config {
 } zc_curve_config_t;
 
 /* Hardware-based overcurrent protection configuration. */
-typedef struct zc_ocp_config {
+typedef struct zc_ocp_hw_config {
     uint32_t limit; /* Current limit in amperes. */
     uint32_t filter; /* Jitter filter in nano seconds. */
     uint32_t rec_delay; /* Recovery time delay in microseconds. */
     uint32_t rec_attempts; /* Number of recovery attempts. */
     bool rec_en; /* Set to true if recovery is enabled. */
-} zc_ocp_config_t;
+} zc_ocp_hw_config_t;
 
 /* Over/under voltage protection configuration. */
 typedef struct zc_ouvp_config {
@@ -188,7 +188,7 @@ typedef struct zc_config {
     union {
         zc_curve_config_t curve;
         zc_csom_config_t csom; /* Closed-state operation mode. */
-        zc_ocp_config_t ocp; /* Over current protection. */
+        zc_ocp_hw_config_t ocphw; /* Over current protection. */
         zc_ouvp_config_t ouvp; /* Over/under voltage protection. */
         zc_oufp_config_t oufp; /* Over/under frequency protection. */
         zc_notif_config_t notif; /* Notification. */
@@ -427,7 +427,7 @@ extern "C" {
 #define ZC_CSOM_MOD_CONFIG_INIT_DEFAULT          {0, 0}
 #define ZC_CSOM_CONFIG_INIT_DEFAULT              {0, 0, {ZC_CSOM_MOD_CONFIG_INIT_DEFAULT}}
 #define ZC_CURVE_CONFIG_INIT_DEFAULT             {0, {ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT}, _ZC_FLOW_DIRECTION_MIN}
-#define ZC_OCP_CONFIG_INIT_DEFAULT               {0, 0, 0, 0, 0}
+#define ZC_OCP_HW_CONFIG_INIT_DEFAULT            {0, 0, 0, 0, 0}
 #define ZC_OUVP_CONFIG_INIT_DEFAULT              {0, 0, 0}
 #define ZC_OUFP_CONFIG_INIT_DEFAULT              {0, 0, 0}
 #define ZC_NOTIF_CONFIG_INIT_DEFAULT             {0}
@@ -456,7 +456,7 @@ extern "C" {
 #define ZC_CSOM_MOD_CONFIG_INIT_ZERO             {0, 0}
 #define ZC_CSOM_CONFIG_INIT_ZERO                 {0, 0, {ZC_CSOM_MOD_CONFIG_INIT_ZERO}}
 #define ZC_CURVE_CONFIG_INIT_ZERO                {0, {ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO}, _ZC_FLOW_DIRECTION_MIN}
-#define ZC_OCP_CONFIG_INIT_ZERO                  {0, 0, 0, 0, 0}
+#define ZC_OCP_HW_CONFIG_INIT_ZERO               {0, 0, 0, 0, 0}
 #define ZC_OUVP_CONFIG_INIT_ZERO                 {0, 0, 0}
 #define ZC_OUFP_CONFIG_INIT_ZERO                 {0, 0, 0}
 #define ZC_NOTIF_CONFIG_INIT_ZERO                {0}
@@ -505,11 +505,11 @@ extern "C" {
 #define ZC_CSOM_CONFIG_MOD_TAG                   2
 #define ZC_CURVE_CONFIG_POINTS_TAG               1
 #define ZC_CURVE_CONFIG_DIRECTION_TAG            2
-#define ZC_OCP_CONFIG_LIMIT_TAG                  1
-#define ZC_OCP_CONFIG_FILTER_TAG                 2
-#define ZC_OCP_CONFIG_REC_DELAY_TAG              3
-#define ZC_OCP_CONFIG_REC_ATTEMPTS_TAG           4
-#define ZC_OCP_CONFIG_REC_EN_TAG                 5
+#define ZC_OCP_HW_CONFIG_LIMIT_TAG               1
+#define ZC_OCP_HW_CONFIG_FILTER_TAG              2
+#define ZC_OCP_HW_CONFIG_REC_DELAY_TAG           3
+#define ZC_OCP_HW_CONFIG_REC_ATTEMPTS_TAG        4
+#define ZC_OCP_HW_CONFIG_REC_EN_TAG              5
 #define ZC_OUVP_CONFIG_LOWER_TAG                 1
 #define ZC_OUVP_CONFIG_UPPER_TAG                 2
 #define ZC_OUVP_CONFIG_ENABLED_TAG               3
@@ -521,7 +521,7 @@ extern "C" {
 #define ZC_CALIB_CONFIG_ARG_TAG                  2
 #define ZC_CONFIG_CURVE_TAG                      1
 #define ZC_CONFIG_CSOM_TAG                       2
-#define ZC_CONFIG_OCP_TAG                        3
+#define ZC_CONFIG_OCPHW_TAG                      3
 #define ZC_CONFIG_OUVP_TAG                       4
 #define ZC_CONFIG_OUFP_TAG                       5
 #define ZC_CONFIG_NOTIF_TAG                      6
@@ -614,14 +614,14 @@ X(a, STATIC,   SINGULAR, UENUM,    direction,         2)
 #define ZC_CURVE_CONFIG_DEFAULT NULL
 #define zc_curve_config_t_points_MSGTYPE zc_curve_point_t
 
-#define ZC_OCP_CONFIG_FIELDLIST(X, a) \
+#define ZC_OCP_HW_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   limit,             1) \
 X(a, STATIC,   SINGULAR, UINT32,   filter,            2) \
 X(a, STATIC,   SINGULAR, UINT32,   rec_delay,         3) \
 X(a, STATIC,   SINGULAR, UINT32,   rec_attempts,      4) \
 X(a, STATIC,   SINGULAR, BOOL,     rec_en,            5)
-#define ZC_OCP_CONFIG_CALLBACK NULL
-#define ZC_OCP_CONFIG_DEFAULT NULL
+#define ZC_OCP_HW_CONFIG_CALLBACK NULL
+#define ZC_OCP_HW_CONFIG_DEFAULT NULL
 
 #define ZC_OUVP_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   lower,             1) \
@@ -651,7 +651,7 @@ X(a, STATIC,   SINGULAR, BYTES,    arg,               2)
 #define ZC_CONFIG_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,curve,config.curve),   1) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,csom,config.csom),   2) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocp,config.ocp),   3) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (config,ocphw,config.ocphw),   3) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,ouvp,config.ouvp),   4) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,oufp,config.oufp),   5) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (config,notif,config.notif),   6) \
@@ -660,7 +660,7 @@ X(a, STATIC,   ONEOF,    MESSAGE,  (config,calib,config.calib),   7)
 #define ZC_CONFIG_DEFAULT NULL
 #define zc_config_t_config_curve_MSGTYPE zc_curve_config_t
 #define zc_config_t_config_csom_MSGTYPE zc_csom_config_t
-#define zc_config_t_config_ocp_MSGTYPE zc_ocp_config_t
+#define zc_config_t_config_ocphw_MSGTYPE zc_ocp_hw_config_t
 #define zc_config_t_config_ouvp_MSGTYPE zc_ouvp_config_t
 #define zc_config_t_config_oufp_MSGTYPE zc_oufp_config_t
 #define zc_config_t_config_notif_MSGTYPE zc_notif_config_t
@@ -786,7 +786,7 @@ extern const pb_msgdesc_t zc_curve_point_t_msg;
 extern const pb_msgdesc_t zc_csom_mod_config_t_msg;
 extern const pb_msgdesc_t zc_csom_config_t_msg;
 extern const pb_msgdesc_t zc_curve_config_t_msg;
-extern const pb_msgdesc_t zc_ocp_config_t_msg;
+extern const pb_msgdesc_t zc_ocp_hw_config_t_msg;
 extern const pb_msgdesc_t zc_ouvp_config_t_msg;
 extern const pb_msgdesc_t zc_oufp_config_t_msg;
 extern const pb_msgdesc_t zc_notif_config_t_msg;
@@ -817,7 +817,7 @@ extern const pb_msgdesc_t zc_message_t_msg;
 #define ZC_CSOM_MOD_CONFIG_FIELDS &zc_csom_mod_config_t_msg
 #define ZC_CSOM_CONFIG_FIELDS &zc_csom_config_t_msg
 #define ZC_CURVE_CONFIG_FIELDS &zc_curve_config_t_msg
-#define ZC_OCP_CONFIG_FIELDS &zc_ocp_config_t_msg
+#define ZC_OCP_HW_CONFIG_FIELDS &zc_ocp_hw_config_t_msg
 #define ZC_OUVP_CONFIG_FIELDS &zc_ouvp_config_t_msg
 #define ZC_OUFP_CONFIG_FIELDS &zc_oufp_config_t_msg
 #define ZC_NOTIF_CONFIG_FIELDS &zc_notif_config_t_msg
@@ -850,7 +850,7 @@ extern const pb_msgdesc_t zc_message_t_msg;
 #define ZC_ERROR_SIZE                            6
 #define ZC_MESSAGE_SIZE                          238
 #define ZC_NOTIF_CONFIG_SIZE                     6
-#define ZC_OCP_CONFIG_SIZE                       26
+#define ZC_OCP_HW_CONFIG_SIZE                    26
 #define ZC_OUFP_CONFIG_SIZE                      14
 #define ZC_OUVP_CONFIG_SIZE                      14
 #define ZC_REQUEST_DEVICE_CMD_SIZE               2
