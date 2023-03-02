@@ -4,7 +4,8 @@ if (CONFIG_ZERO_CONTROL_MESSAGES)
     # Note that here, we're adding CMAKE_CURRENT_SOURCE_DIR to the include path for nanopb.
     # This is needed because the below call to nanopb_generate_cpp() is using
     # 'RELPATH .'
-    set(NANOPB_OPTIONS "-I${CMAKE_CURRENT_SOURCE_DIR}")
+    # And generate with C-style names.
+    set(NANOPB_OPTIONS "-I${CMAKE_CURRENT_SOURCE_DIR} -C")
 
     nanopb_generate_cpp(zc_messages_sources zc_messages_headers 
         RELPATH "${CMAKE_CURRENT_SOURCE_DIR}" 
