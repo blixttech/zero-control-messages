@@ -8,8 +8,8 @@ enum ZCApiVersion {
 
 /* The state of the power switch. */
 enum ZCSwitchState {
-	ZC_SWITCH_OPENED = 0; /* Switch openned */
-	ZC_SWITCH_CLOSED = 1; /* Switch closed */
+	ZC_SWITCH_STATE_OPENED = 0; /* Switch openned */
+	ZC_SWITCH_STATE_CLOSED = 1; /* Switch closed */
 }
 
 /* The state of the trip curve. */
@@ -37,8 +37,8 @@ enum ZCTripCause {
 
 /* Current flow direction. */
 enum ZCFlowDirection {
-	ZC_FLOW_FORWARD	 = 0; /* Forward current flow. */
-	ZC_FLOW_BACKWARD = 1; /* Backward current flow. */
+	ZC_FLOW_DIRECTION_FORWARD  = 0; /* Forward current flow. */
+	ZC_FLOW_DIRECTION_BACKWARD = 1; /* Backward current flow. */
 }
 
 enum ZCDeviceCmd {
@@ -75,7 +75,7 @@ message ZCVersion {
 	optional bytes sw_ver	 = 3; /* Firmware version number. */
 	optional bytes hw_ver	 = 4; /* Hardware version numbers. */
 	optional bytes link_addr = 5; /* Link address of the device. */
-	optional bool is_secure	 = 6; /* Set to true if secure access is enabled. */
+	optional bool sec_en	 = 6; /* Set to true if secure access is enabled. */
 }
 
 /* Temperature. */
@@ -126,23 +126,25 @@ message ZCCurveConfig {
 
 /* Hardware-based overcurrent protection configuration. */
 message ZCOcpConfig {
-	uint32 limit	    = 1; /* Current limit. */
-	uint32 filter	    = 2; /* Jitter filter. */
-	uint32 rec_delay    = 3; /* Recovery time delay. */
+	uint32 limit	    = 1; /* Current limit in amperes. */
+	uint32 filter	    = 2; /* Jitter filter in nano seconds. */
+	uint32 rec_delay    = 3; /* Recovery time delay in microseconds. */
 	uint32 rec_attempts = 4; /* Number of recovery attempts. */
 	bool rec_en	    = 5; /* Set to true if recovery is enabled. */
 }
 
 /* Over/under voltage protection configuration. */
 message ZCOuvpConfig {
-	uint32 lower = 1; /* Lower limit in volts. */
-	uint32 upper = 2; /* Upper limit in volts. */
+	uint32 lower = 2; /* Lower limit in volts. */
+	uint32 upper = 3; /* Upper limit in volts. */
+	bool enabled = 1; /* Set to true if enabled. */
 }
 
 /* Over/under frequency protection configuration. */
 message ZCOufpConfig {
-	uint32 lower = 1; /* Lower limit in millihertz. */
-	uint32 upper = 2; /* Upper limit in millihertz. */
+	uint32 lower = 2; /* Lower limit in millihertz. */
+	uint32 upper = 3; /* Upper limit in millihertz. */
+	bool enabled = 1; /* Set to true if enabled. */
 }
 
 /* Notification configuration. */
@@ -162,8 +164,8 @@ message ZCConfig {
 		ZCCurveConfig curve = 1;
 		ZCCsomConfig csom   = 2; /* Closed-state operation mode. */
 		ZCOcpConfig ocp	    = 3; /* Over current protection. */
-		ZCOuvpConfig ouv    = 4; /* Over/under voltage protection. */
-		ZCOufpConfig ouf    = 5; /* Over/under frequency protection. */
+		ZCOuvpConfig ouvp   = 4; /* Over/under voltage protection. */
+		ZCOufpConfig oufp   = 5; /* Over/under frequency protection. */
 		ZCNotifConfig notif = 6; /* Notification. */
 		ZCCalibConfig calib = 7; /* Calibration. */
 	}
@@ -230,8 +232,8 @@ message ZCRequestGetConfig {
 		ZCRequestGetConfigCurve curve = 1; /* Trip curve */
 		ZCRequestGetConfigCsom csom   = 2; /* Closed-state operation mode. */
 		ZCRequestGetConfigOcp ocp     = 3; /* Over current protection. */
-		ZCRequestGetConfigOuvp ouv    = 4; /* Over/under voltage protection. */
-		ZCRequestGetConfigOufp ouf    = 5; /* Over/under frequency protection. */
+		ZCRequestGetConfigOuvp ouvp   = 4; /* Over/under voltage protection. */
+		ZCRequestGetConfigOufp oufp   = 5; /* Over/under frequency protection. */
 		ZCRequestGetConfigNotif notif = 6; /* Notification. */
 		ZCRequestGetConfigCalib calib = 7; /* Calibration. */
 	}
