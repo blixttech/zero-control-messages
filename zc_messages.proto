@@ -135,16 +135,16 @@ message ZCOcpConfig {
 
 /* Over/under voltage protection configuration. */
 message ZCOuvpConfig {
-	uint32 lower = 2; /* Lower limit in volts. */
-	uint32 upper = 3; /* Upper limit in volts. */
-	bool enabled = 1; /* Set to true if enabled. */
+	uint32 lower = 1; /* Lower limit in volts. */
+	uint32 upper = 2; /* Upper limit in volts. */
+	bool enabled = 3; /* Set to true if enabled. */
 }
 
 /* Over/under frequency protection configuration. */
 message ZCOufpConfig {
-	uint32 lower = 2; /* Lower limit in millihertz. */
-	uint32 upper = 3; /* Upper limit in millihertz. */
-	bool enabled = 1; /* Set to true if enabled. */
+	uint32 lower = 1; /* Lower limit in millihertz. */
+	uint32 upper = 2; /* Upper limit in millihertz. */
+	bool enabled = 3; /* Set to true if enabled. */
 }
 
 /* Notification configuration. */
