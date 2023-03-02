@@ -3,4 +3,3 @@ build:
   kconfig: Kconfig
   depends:
     - nanopb
-
