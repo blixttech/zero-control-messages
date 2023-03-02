@@ -1,4 +1,6 @@
 build:
   cmake: .
   kconfig: Kconfig
+  depends:
+    - nanopb
 
