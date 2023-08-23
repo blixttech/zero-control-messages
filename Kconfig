@@ -1,3 +1,4 @@
 config ZERO_CONTROL_MESSAGES
     bool "Use nanopb-based message structures for control messages"
-    default y
+    default n
+    depends on NANOPB
