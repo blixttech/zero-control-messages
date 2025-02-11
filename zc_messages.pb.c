@@ -18,6 +18,9 @@ PB_BIND(ZC_STATUS, zc_status_t, AUTO)
 PB_BIND(ZC_CURVE_POINT, zc_curve_point_t, AUTO)
 
 
+PB_BIND(ZC_INI_CONFIG, zc_ini_config_t, AUTO)
+
+
 PB_BIND(ZC_CSOM_MOD_CONFIG, zc_csom_mod_config_t, AUTO)
 
 
@@ -78,6 +81,9 @@ PB_BIND(ZC_REQUEST_GET_CONFIG_NOTIF, zc_request_get_config_notif_t, AUTO)
 PB_BIND(ZC_REQUEST_GET_CONFIG_CALIB, zc_request_get_config_calib_t, AUTO)
 
 
+PB_BIND(ZC_REQUEST_GET_CONFIG_INI, zc_request_get_config_ini_t, AUTO)
+
+
 PB_BIND(ZC_REQUEST_GET_CONFIG, zc_request_get_config_t, AUTO)
 
 
@@ -91,6 +97,7 @@ PB_BIND(ZC_REQUEST, zc_request_t, AUTO)
 
 
 PB_BIND(ZC_MESSAGE, zc_message_t, AUTO)
+
 
 
 
