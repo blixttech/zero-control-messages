@@ -6,6 +6,8 @@ GENERATED_H_FILES = $(patsubst %.proto,%.pb.h, $(SOURCE_FILES))
 
 GENERATOR_OPTIONS += -C
 
+export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+
 generate: $(GENERATED_C_FILES)
 
 %.pb.c %.pb.h: %.proto %.options
