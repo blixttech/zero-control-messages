@@ -18,7 +18,7 @@ PB_BIND(ZC_STATUS, zc_status_t, AUTO)
 PB_BIND(ZC_CURVE_POINT, zc_curve_point_t, AUTO)
 
 
-PB_BIND(ZC_INI_CONFIG, zc_ini_config_t, AUTO)
+PB_BIND(ZC_INI_STATE_CONFIG, zc_ini_state_config_t, AUTO)
 
 
 PB_BIND(ZC_CSOM_MOD_CONFIG, zc_csom_mod_config_t, AUTO)
