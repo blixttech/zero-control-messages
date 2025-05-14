@@ -166,6 +166,7 @@ typedef struct zc_ocp_hw_config {
     uint32_t rec_delay; /* Recovery time delay in microseconds. */
     uint32_t rec_attempts; /* Number of recovery attempts. */
     bool rec_en; /* Set to true if recovery is enabled. */
+    uint32_t rec_reset_timeout; /* Recovery reset timeout in milliseconds. */
 } zc_ocp_hw_config_t;
 
 /* Over/under voltage protection configuration. */
@@ -457,7 +458,7 @@ extern "C" {
 #define ZC_CSOM_MOD_CONFIG_INIT_DEFAULT          {0, 0}
 #define ZC_CSOM_CONFIG_INIT_DEFAULT              {0, 0, {ZC_CSOM_MOD_CONFIG_INIT_DEFAULT}}
 #define ZC_CURVE_CONFIG_INIT_DEFAULT             {0, {ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT, ZC_CURVE_POINT_INIT_DEFAULT}, _ZC_FLOW_DIRECTION_MIN}
-#define ZC_OCP_HW_CONFIG_INIT_DEFAULT            {0, 0, 0, 0, 0}
+#define ZC_OCP_HW_CONFIG_INIT_DEFAULT            {0, 0, 0, 0, 0, 0}
 #define ZC_OUVP_CONFIG_INIT_DEFAULT              {0, 0, 0}
 #define ZC_OUFP_CONFIG_INIT_DEFAULT              {0, 0, 0}
 #define ZC_NOTIF_CONFIG_INIT_DEFAULT             {0}
@@ -488,7 +489,7 @@ extern "C" {
 #define ZC_CSOM_MOD_CONFIG_INIT_ZERO             {0, 0}
 #define ZC_CSOM_CONFIG_INIT_ZERO                 {0, 0, {ZC_CSOM_MOD_CONFIG_INIT_ZERO}}
 #define ZC_CURVE_CONFIG_INIT_ZERO                {0, {ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO, ZC_CURVE_POINT_INIT_ZERO}, _ZC_FLOW_DIRECTION_MIN}
-#define ZC_OCP_HW_CONFIG_INIT_ZERO               {0, 0, 0, 0, 0}
+#define ZC_OCP_HW_CONFIG_INIT_ZERO               {0, 0, 0, 0, 0, 0}
 #define ZC_OUVP_CONFIG_INIT_ZERO                 {0, 0, 0}
 #define ZC_OUFP_CONFIG_INIT_ZERO                 {0, 0, 0}
 #define ZC_NOTIF_CONFIG_INIT_ZERO                {0}
@@ -544,6 +545,7 @@ extern "C" {
 #define ZC_OCP_HW_CONFIG_REC_DELAY_TAG           3
 #define ZC_OCP_HW_CONFIG_REC_ATTEMPTS_TAG        4
 #define ZC_OCP_HW_CONFIG_REC_EN_TAG              5
+#define ZC_OCP_HW_CONFIG_REC_RESET_TIMEOUT_TAG   6
 #define ZC_OUVP_CONFIG_LOWER_TAG                 1
 #define ZC_OUVP_CONFIG_UPPER_TAG                 2
 #define ZC_OUVP_CONFIG_ENABLED_TAG               3
@@ -661,7 +663,8 @@ X(a, STATIC,   SINGULAR, UINT32,   limit,             1) \
 X(a, STATIC,   SINGULAR, UINT32,   filter,            2) \
 X(a, STATIC,   SINGULAR, UINT32,   rec_delay,         3) \
 X(a, STATIC,   SINGULAR, UINT32,   rec_attempts,      4) \
-X(a, STATIC,   SINGULAR, BOOL,     rec_en,            5)
+X(a, STATIC,   SINGULAR, BOOL,     rec_en,            5) \
+X(a, STATIC,   SINGULAR, UINT32,   rec_reset_timeout,   6)
 #define ZC_OCP_HW_CONFIG_CALLBACK NULL
 #define ZC_OCP_HW_CONFIG_DEFAULT NULL
 
@@ -906,7 +909,7 @@ extern const pb_msgdesc_t zc_message_t_msg;
 #define ZC_INI_STATE_CONFIG_SIZE                 2
 #define ZC_MESSAGE_SIZE                          238
 #define ZC_NOTIF_CONFIG_SIZE                     6
-#define ZC_OCP_HW_CONFIG_SIZE                    26
+#define ZC_OCP_HW_CONFIG_SIZE                    32
 #define ZC_OUFP_CONFIG_SIZE                      14
 #define ZC_OUVP_CONFIG_SIZE                      14
 #define ZC_REQUEST_DEVICE_CMD_SIZE               2
